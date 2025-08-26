@@ -1,0 +1,216 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the body takes up at least the full height of the screen */
+}
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 0 0 20px 20px; /* round only bottom corners */
+  margin: 10px; /* small spacing around */
+}
+
+.app-header h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.back-btn {
+  position: absolute;
+  left: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #333;
+}
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3); /* transparent white */
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border-radius: 0 0 20px 20px; /* round bottom corners */
+  margin: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle border */
+}
+
+.app-header h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #222; /* darker text for contrast */
+}
+
+.back-btn {
+  position: absolute;
+  left: 15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: #222; /* arrow color */
+}
+
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-grow: 1; /* This allows the content to grow and take the available space */
+}
+
+.soft-drinks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.drink-item {
+  background-color: white;
+  border-radius: 20px; /* more rounded corners */
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px; /* add some inner spacing */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.drink-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px; /* round the images inside */
+}
+
+.drink-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.drink-item h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.drink-item p {
+  font-size: 1rem;
+  color: #777;
+}
+footer {
+  background: #2ca24c(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px 20px 0 0; /* rounded top corners */
+  padding: 25px 15px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-text-links {
+  margin-bottom: 15px;
+}
+
+.footer-text-links a {
+  color: #222;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.footer-text-links a:hover {
+  color: #1b58da; /* highlight color */
+}
+
+.footer-links {
+  margin: 12px 0;
+}
+
+.footer-links a {
+  margin: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.footer-links svg {
+  width: 26px;
+  height: 26px;
+  fill: #333;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effects */
+.footer-links a:hover svg {
+  fill: #18529f; /* orange highlight */
+  transform: scale(1.2); /* pop animation */
+}
+
+.footer-text p {
+  font-size: 0.85rem;
+  color: #444;
+  margin-top: 12px;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex-grow: 1; /* content expands */
+}
+
+footer {
+  margin-top: 20px; /* slight gap */
+}
+/* Remove blue tap highlight */
+button, a {
+  -webkit-tap-highlight-color: transparent; /* For iOS/Android */
+  outline: none; /* Removes blue focus outline */
+}
+
+button:focus, a:focus {
+  outline: none;
+  box-shadow: none; /* Ensures no glow effect */
+}
+
+

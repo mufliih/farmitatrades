@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farmita Traders</title>
+    <!-- ✅ Replace with your logo -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Cylindrical Floating Navbar -->
+<nav class="nav-wrap">
+  <div class="navbar">
+ <!-- Left: Brand / Logo -->
+<a href="#home" class="brand" id="logoBtn">
+  <img src="assets/logo.png" alt="Farmita Traders Logo">
+</a>
+
+
+
+    <!-- Center: Links -->
+    <ul id="navLinks" class="links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <!-- Right: Text on desktop, Hamburger on mobile -->
+    <div class="right-slot">
+      <span class="right-text">Farmita Traders</span>
+      <button id="menuToggle" class="menu-btn" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</nav>
+
+ 
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="assets/bg removed logo.png" alt="Farmita Traders Logo">
+      </div>
+
+      <!-- Headline -->
+      <h1>Wholesale Trading<br>Made Simple</h1>
+
+      <!-- Subtext -->
+      <p>Your trusted partner for reliable import &amp; export solutions across Kerala and beyond</p>
+
+      <!-- CTA Button -->
+      <a href="#contact" class="btn">Contact</a>
+    </div>
+  </section>
+
+
+
+  <!-- Products -->
+  <section id="products" class="products reveal">
+    <h1 class="section-title">Our Products</h1>
+
+    <div class="product-grid">
+      <a href="soft drink.html" class="product-card">
+        <img src="assets/kinza.png" alt="Kinza Cola">
+        <div class="product-info">
+          <h3>Kinza Cola</h3>
+          <p>Refreshing, low-sugar drink</p>
+        </div>
+      </a>
+
+      <a href="dates.html" class="product-card">
+        <img src="assets/dates.png" alt="Dates">
+        <div class="product-info">
+          <h3>Dates</h3>
+          <p>Premium quality dates</p>
+        </div>
+      </a>
+
+      <a href="coconut.html" class="product-card">
+        <img src="assets/coconut.png" alt="Coconut">
+        <div class="product-info">
+          <h3>Coconut</h3>
+          <p>Fresh, organic coconut</p>
+        </div>
+      </a>
+    </div>
+  </section>
+  <!-- About -->
+<section id="about" class="about reveal">
+  <h2>About Us</h2>
+  <p class="intro">
+    At <strong>Farmita Traders</strong>, we specialize in the import, export, and distribution of food and agricultural products, bridging the gap between global manufacturers and local markets. Based in Kerala, we deliver high-quality goods—including beverages and essential consumer products—to retailers across India and beyond.
+  </p>
+  
+  <div class="commitments">
+    <div class="card">
+      <span>🚢</span>
+      <h3>Efficient <br>Import & Export</h3>
+      <p>Efficiently managing global trade with seamless import and export solutions.</p>
+    </div>
+    <div class="card">
+      <span>📦</span>
+      <h3> Distribution</h3>
+      <p>Delivering fast and reliable supply with seamless service from us to you.</p>
+    </div>
+    <div class="card">
+      <span>✨</span>
+      <h3>Innovative Products</h3>
+      <p>Bringing fresh ideas and smart solutions with seamless innovation for tomorrow.</p>
+    </div>
+    <div class="card">
+      <span>🤝</span>
+      <h3>Trusted Partnerships</h3>
+      <p>“Building strong bonds with seamless partnerships for lasting success.</p>
+    </div>
+  </div>
+
+  <p class="vision reveal">
+    As we expand, our vision is to integrate technology and AI into our workflows, strengthen our offline and online presence, and continue supporting local communities while reaching global markets.
+  </p>
+
+  <p class="tagline"><strong>Farmita Traders – Connecting Global Quality with Local Trust.</strong></p>
+</section>
+
+
+
+  <!-- Contact -->
+  <section id="contact" class="contact reveal">
+    <h2>Contact Us</h2>
+   <form id="contactForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <input type="tel" name="phone" placeholder="Your Phone Number" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <!-- Email + Socials -->
+    <div class="footer-email">
+      <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
+      <a href="mailto:sales@farmitatraders.com">sales@farmitatraders.com</a>
+    </div>
+
+    <div class="social-icons">
+      <a href="https://wa.me/917902914765" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"></a>
+      <a href="https://instagram.com/farmita.traders" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      <a href="https://facebook.com/kinza kerala" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+    </div>
+
+    <p class="copyright">© 2025 Farmita Traders. All rights reserved.</p>
+  </section>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
