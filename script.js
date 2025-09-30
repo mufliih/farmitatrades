@@ -108,23 +108,13 @@ document.addEventListener("DOMContentLoaded", () => {
 let lastScrollY = window.scrollY;
 const navbar = document.querySelector("nav");
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > lastScrollY) {
-    // scrolling down → hide navbar
-    navbar.style.top = "-80px";
-  } else {
-    // scrolling up → show navbar with shadow
-    navbar.style.top = "0";
-    navbar.classList.add("scrolled");
-  }
-
   // remove shadow if at the very top
   if (window.scrollY === 0) {
     navbar.classList.remove("scrolled");
   }
 
   lastScrollY = window.scrollY;
-});
+
 // Smooth scroll for older browsers (optional)
 document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
   anchor.addEventListener("click", function (e) {
