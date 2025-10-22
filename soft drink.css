@@ -84,59 +84,73 @@ body {
   height: 24px;
   stroke: #222; /* arrow color */
 }
-
-
-
-.container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  flex-grow: 1; /* This allows the content to grow and take the available space */
-}
-
-.soft-drinks {
+  /* ---------- Product Grid ---------- */
+    /* Desktop default */
+.product-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  padding: 20px;
   max-width: 1200px;
-  width: 100%;
+  margin: auto;
 }
 
-.drink-item {
-  background-color: white;
-  border-radius: 20px; /* more rounded corners */
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 15px; /* add some inner spacing */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Tablet (2 cards per row) */
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.drink-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 15px; /* round the images inside */
+/* Mobile (1 card per row, centered & wider) */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    justify-items: center; /* centers the card */
+  }
+
+  .product-card {
+    width: 90%; /* slightly wider for mobile view */
+    max-width: 350px;
+  }
 }
 
-.drink-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-}
+    
 
-.drink-item h3 {
-  font-size: 1.5rem;
-  margin: 10px 0;
-}
+    .product-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.drink-item p {
-  font-size: 1rem;
-  color: #777;
-}
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      font-size: 1em;
+      color: #333;
+    }
+
+
+
 footer {
   background: #2ca24c(255, 255, 255, 0.25);
   backdrop-filter: blur(12px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid #ffffff(255, 248, 248, 0.3);
   border-radius: 20px 20px 0 0; /* rounded top corners */
   padding: 25px 15px;
   text-align: center;
@@ -148,7 +162,7 @@ footer {
 }
 
 .footer-text-links a {
-  color: #222;
+  color: #ffffff;
   text-decoration: none;
   font-size: 0.95rem;
   margin: 0 8px;
@@ -156,7 +170,7 @@ footer {
 }
 
 .footer-text-links a:hover {
-  color: #1b58da; /* highlight color */
+  color: #18702e; /* highlight color */
 }
 
 .footer-links {
@@ -174,19 +188,19 @@ footer {
 .footer-links svg {
   width: 26px;
   height: 26px;
-  fill: #333;
+  fill: #ffffff;
   transition: fill 0.3s ease, transform 0.3s ease;
 }
 
 /* Hover effects */
 .footer-links a:hover svg {
-  fill: #18529f; /* orange highlight */
+  fill: #15732f; /* orange highlight */
   transform: scale(1.2); /* pop animation */
 }
 
 .footer-text p {
   font-size: 0.85rem;
-  color: #444;
+  color: #ffffff;
   margin-top: 12px;
 }
 body {
@@ -211,6 +225,15 @@ button, a {
 button:focus, a:focus {
   outline: none;
   box-shadow: none; /* Ensures no glow effect */
+}
+.app-footer {
+
+  background-color: #001F3F; /* Navy blue */
+  color: white;
+  padding: 40px 20px 10px;
+  margin-top: 70px;
+  position: relative; /* prevents overlap with products */
+  clear: both;
 }
 
 
