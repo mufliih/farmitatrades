@@ -1,0 +1,222 @@
+    /* ---------- Base Styles ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ---------- Navbar ---------- */
+/* Rounded Glassy Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 20px auto;
+  padding: 12px 20px;
+  width: 90%;
+  max-width: 1200px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.app-header h1 {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.back-btn {
+  position: absolute;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.back-btn svg {
+  width: 25px;
+  height: 25px;
+  stroke: #333;
+}
+    /* ---------- Hero Section ---------- */
+    .hero {
+      margin-top: 45px;
+      text-align: center;
+      padding: 40px 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 2em;
+      color: #333;
+    }
+
+    /* ---------- Product Grid ---------- */
+    /* Desktop default */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Tablet (2 cards per row) */
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (1 card per row, centered & wider) */
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    justify-items: center; /* centers the card */
+    gap: 20px; /* more gap for better spacing */
+  }
+
+  .product-card {
+    width: 100%; /* slightly wider for mobile view */
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+  }
+}
+
+    
+
+    .product-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px ;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      font-size: 1em;
+      color: #333;
+    }
+
+    /* ---------- Footer ---------- */
+
+footer {
+  background: #2ca24c(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-top: 1px solid #ffffff(255, 248, 248, 0.3);
+  border-radius: 20px 20px 0 0; /* rounded top corners */
+  padding: 25px 15px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-text-links {
+  margin-bottom: 15px;
+}
+
+.footer-text-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin: 0 8px;
+  transition: color 0.3s ease;
+}
+
+.footer-text-links a:hover {
+  color: #18702e; /* highlight color */
+}
+
+.footer-links {
+  margin: 12px 0;
+}
+
+.footer-links a {
+  margin: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.footer-links svg {
+  width: 26px;
+  height: 26px;
+  fill: #ffffff;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effects */
+.footer-links a:hover svg {
+  fill: #15732f; /* orange highlight */
+  transform: scale(1.2); /* pop animation */
+}
+
+.footer-text p {
+  font-size: 0.85rem;
+  color: #ffffff;
+  margin-top: 12px;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex-grow: 1; /* content expands */
+}
+
+footer {
+  margin-top: 20px; /* slight gap */
+}
+/* Remove blue tap highlight */
+button, a {
+  -webkit-tap-highlight-color: transparent; /* For iOS/Android */
+  outline: none; /* Removes blue focus outline */
+}
+
+button:focus, a:focus {
+  outline: none;
+  box-shadow: none; /* Ensures no glow effect */
+}
+.app-footer {
+
+  background-color: #001F3F; /* Navy blue */
+  color: white;
+  padding: 40px 20px 10px;
+  margin-top: 70px;
+  position: relative; /* prevents overlap with products */
+  clear: both;
+}
