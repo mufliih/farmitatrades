@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
       links.classList.toggle("show");
     });
 
+    // Close menu logic
+    const closeBtn = document.getElementById("closeMenuBtn");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        links.classList.remove("show");
+      });
+    }
+
     // Close menu when a link is clicked (optional UX)
     links.querySelectorAll("a").forEach(a =>
       a.addEventListener("click", () => links.classList.remove("show"))
@@ -39,17 +47,19 @@ if (contactBtn) contactBtn.addEventListener("click", scrollToContact);
 
 // Hide navbar on scroll down, show on scroll up
 let lastScroll = 0;
-const nav = document.getElementById("mainNav");
+const navWrap = document.querySelector(".nav-wrap");
 
 window.addEventListener("scroll", () => {
   let currentScroll = window.pageYOffset;
 
-  if (currentScroll > lastScroll) {
-    // scrolling down
-    nav.style.top = "-70px";
-  } else {
-    // scrolling up
-    nav.style.top = "0";
+  if (navWrap) {
+    if (currentScroll > lastScroll && currentScroll > 50) {
+      // scrolling down
+      navWrap.style.top = "-120px";
+    } else {
+      // scrolling up
+      navWrap.style.top = "20px";
+    }
   }
 
   lastScroll = currentScroll;

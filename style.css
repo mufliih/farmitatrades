@@ -12,20 +12,7 @@ body {
 }
 
 /* ===== Cylindrical Floating Navbar ===== */
-.nav-wrap {
-  position: fixed;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(96%, 1100px);
-  z-index: 1000;
-  padding: 6px;
-  /* thin outer rim */
-  border-radius: 9999px;
-  /* full pill */
-  background: linear-gradient(180deg, #fdfdfd, #e9eef5);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-}
+/* .nav-wrap removed to avoid duplication */
 
 .nav-wrap::before {
   /* subtle top highlight for 3D feel */
@@ -45,9 +32,8 @@ body {
   gap: 12px;
   padding: 12px 18px;
   border-radius: 9999px;
-  background: linear-gradient(180deg, #f8f9fa, #eef3f8);
-  /* “clean” */
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8), inset 0 -2px 6px rgba(13, 33, 66, 0.06);
+  background: transparent;
+  width: 100%;
 }
 
 /* Brand */
@@ -79,6 +65,11 @@ body {
   gap: clamp(10px, 4vw, 22px);
 }
 
+.mobile-close {
+  display: none;
+  /* Hide close button on desktop */
+}
+
 .links a {
   color: #0d2142;
   text-decoration: none;
@@ -101,11 +92,15 @@ body {
   transform: translateX(-50%);
 }
 
-.links a:hover {
+.links a:hover,
+.links a:focus,
+.links a:active {
   color: #2ca24c;
 }
 
-.links a:hover::after {
+.links a:hover::after,
+.links a:focus::after,
+.links a:active::after {
   width: 70%;
 }
 
@@ -152,27 +147,70 @@ body {
     place-items: center;
   }
 
-  /* Collapse links into dropdown panel */
+  /* Full Screen Mobile Menu Overlay */
   .links {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     flex-direction: column;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 10px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    justify-content: center;
+    align-items: flex-start;
+    /* Left align items */
+    padding-left: 40px;
+    /* Add spacing from left */
+
+    /* Liquid Glass Effect */
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.8);
+
+    z-index: 2000;
+    /* On top of everything */
+    padding: 20px 20px 20px 40px;
+    /* Top Right Bottom Left */
+    gap: 30px;
     display: none;
-    min-width: 180px;
+    /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
   .links.show {
     display: flex;
+    opacity: 1;
   }
 
   .links a {
     color: #0d2142;
     padding: 10px 12px;
+    font-size: 2rem;
+    /* Large text for mobile */
+    font-weight: 700;
+  }
+
+  /* Close Button Styles */
+  .mobile-close {
+    display: block;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+  }
+
+  #closeMenuBtn {
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: #0d2142;
+    cursor: pointer;
+    padding: 10px;
+    line-height: 1;
   }
 }
 
@@ -184,31 +222,33 @@ section {
 
 .nav-wrap {
   position: fixed;
-  top: 12px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(96%, 1100px);
+  width: min(90%, 1000px);
   z-index: 1000;
   padding: 6px;
   border-radius: 9999px;
 
-  /* Glassmorphism effect */
-  background: rgba(248, 249, 250, 0.7);
-  /* semi-transparent */
-  backdrop-filter: blur(12px);
-  /* blur background */
-  -webkit-backdrop-filter: blur(12px);
-  /* Safari support */
+  /* Apple-style Liquid Glass */
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: saturate(180%) blur(25px);
+  -webkit-backdrop-filter: saturate(180%) blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  /* Liquid highlight */
 
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 /* Slightly darker on scroll for contrast */
 .scrolled .nav-wrap {
-  background: rgba(248, 249, 250, 0.9);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 nav {
