@@ -45,25 +45,7 @@ function scrollToContact() {
 if (contactNavBtn) contactNavBtn.addEventListener("click", scrollToContact);
 if (contactBtn) contactBtn.addEventListener("click", scrollToContact);
 
-// Hide navbar on scroll down, show on scroll up
-let lastScroll = 0;
-const navWrap = document.querySelector(".nav-wrap");
 
-window.addEventListener("scroll", () => {
-  let currentScroll = window.pageYOffset;
-
-  if (navWrap) {
-    if (currentScroll > lastScroll && currentScroll > 50) {
-      // scrolling down
-      navWrap.style.top = "-120px";
-    } else {
-      // scrolling up
-      navWrap.style.top = "20px";
-    }
-  }
-
-  lastScroll = currentScroll;
-});
 // Smooth scroll for Contact Us button
 document.addEventListener("DOMContentLoaded", () => {
   const contactBtn = document.querySelector(".hero .btn");
