@@ -1,280 +1,434 @@
+/* ---------- Base Styles ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
+  background-color: #f8f8f8;
   color: #333;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  /* Ensures the body takes up at least the full height of the screen */
+  overflow: hidden;
+  /* We handle scrolling via JS */
+  height: 100vh;
+  width: 100vw;
 }
 
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ---------- Main Container ---------- */
+.main-container {
   position: relative;
-  padding: 15px;
-  background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 20px 20px;
-  /* round only bottom corners */
-  margin: 10px;
-  /* small spacing around */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.app-header h1 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.back-btn {
-  position: absolute;
-  left: 15px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.back-btn svg {
-  width: 24px;
-  height: 24px;
-  stroke: #333;
-}
-
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ---------- Horizontal Track ---------- */
+.horizontal-track {
   position: relative;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.3);
-  /* transparent white */
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
-  border-radius: 0 0 20px 20px;
-  /* round bottom corners */
-  margin: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  /* subtle border */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.app-header h1 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin: 0;
-  color: #222;
-  /* darker text for contrast */
-}
-
-.back-btn {
+/* ---------- Product Sections (Full Screen) ---------- */
+.product-section {
   position: absolute;
-  left: 15px;
-  background: none;
-  border: none;
-  cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+  /* Slower animation */
+  will-change: transform;
+  /* Initial state: pushed to the right */
+  transform: translateX(100%);
 }
 
-.back-btn svg {
-  width: 24px;
-  height: 24px;
-  stroke: #222;
-  /* arrow color */
+/* First section is visible by default */
+.product-section:first-child {
+  transform: translateX(0);
 }
 
-/* ---------- Product Grid ---------- */
-/* Desktop default */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+/* Z-Index Stacking */
+.product-section:nth-child(1) {
+  z-index: 1;
+}
+
+.product-section:nth-child(2) {
+  z-index: 2;
+}
+
+.product-section:nth-child(3) {
+  z-index: 3;
+}
+
+.product-section:nth-child(4) {
+  z-index: 4;
+}
+
+.product-section:nth-child(5) {
+  z-index: 5;
+}
+
+.product-section:nth-child(6) {
+  z-index: 6;
+}
+
+.image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.full-screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Cover the screen to remove white space */
+  object-position: center;
+  /* Ensure strict center alignment for all images */
+}
+
+/* Specific alignment for other products to prevent navbar overlap */
+.product-section:not(:first-child) .full-screen-img {
+  object-position: center top;
+}
+
+.product-section.in-view .full-screen-img {
+  transform: none;
+  /* No zoom on desktop */
+}
+
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+  z-index: 2;
+}
+
+.text-overlay {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  max-width: 800px;
   padding: 20px;
-  max-width: 1200px;
-  margin: auto;
-  animation: fadeInUp 0.8s ease-out forwards;
-  opacity: 0;
+  opacity: 1;
+  /* Always visible */
+  transform: none;
+  /* No transform on container */
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* Remove container animation rules */
+.product-section.in-view .text-overlay {
+  opacity: 1;
+  transform: none;
+}
+
+.text-overlay h2 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.text-overlay p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  line-height: 1.6;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  /* Animation for Paragraph ONLY */
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1s ease 0.3s;
+}
+
+.product-section.in-view .text-overlay p {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.text-overlay mark {
+  background-color: transparent;
+  font-weight: 800;
+  /* Extra Bold font for all */
+}
+
+/* Cola (Blue) */
+.product-section:nth-child(1) .text-overlay mark {
+  color: #00a8ff;
+}
+
+/* Lemon (Yellow) */
+.product-section:nth-child(2) .text-overlay mark {
+  color: #f1c40f;
+}
+
+/* Citrus (Green) */
+.product-section:nth-child(3) .text-overlay mark {
+  color: #44bd32;
+}
+
+/* Pomegranate (Red) */
+.product-section:nth-child(4) .text-overlay mark {
+  color: #e84118;
+}
+
+/* Orange (Orange) */
+.product-section:nth-child(5) .text-overlay mark {
+  color: #f39c12;
+}
+
+/* Responsive Text */
+@media (max-width: 768px) {
+  .text-overlay h2 {
+    font-size: 2.5rem;
   }
 
+  .text-overlay p {
+    font-size: 1rem;
+  }
+}
+
+/* ---------- Navigation Arrows ---------- */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  /* Removed background */
+  border: none;
+  /* Removed border */
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  color: white;
+  transition: all 0.3s ease;
+  opacity: 0;
+  /* Hidden by default, shown via JS or hover if desired, but let's show them */
+  animation: fadeIn 0.5s forwards 1s;
+}
+
+.nav-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-arrow {
+  left: 30px;
+}
+
+.next-arrow {
+  right: 30px;
+}
+
+.nav-arrow.hidden {
+  opacity: 0 !important;
+  /* Force hide */
+  pointer-events: none;
+  animation: none;
+  /* Cancel animation to prevent override */
+}
+
+@keyframes fadeIn {
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-/* Tablet (2 cards per row) */
-@media (max-width: 900px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .nav-arrow {
+    display: none !important;
   }
 }
 
-/* Mobile (1 card per row, centered & wider) */
-@media (max-width: 600px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    /* centers the card */
-  }
-
-  .product-card {
-    width: 90%;
-    /* slightly wider for mobile view */
-    max-width: 350px;
-  }
-}
-
-
-
-.product-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-.product-card img {
+/* ---------- Footer Container (Vertical Reveal) ---------- */
+.footer-container {
+  position: fixed;
+  bottom: -100vh;
+  /* Hidden initially */
+  left: 0;
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  height: 100vh;
+  z-index: 200;
+  /* Higher than arrows (100) to ensure they are covered */
+  transition: bottom 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Smooth slide up */
+  background-color: #10b981;
 }
 
-.product-card h3 {
-  font-size: 1em;
-  color: #333;
+.footer-container.visible {
+  bottom: 0;
 }
 
-
-
-footer {
-  background: #2ca24c(255, 255, 255, 0.25);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border-top: 1px solid #ffffff(255, 248, 248, 0.3);
-  border-radius: 20px 20px 0 0;
-  /* rounded top corners */
-  padding: 25px 15px;
-  text-align: center;
-  margin-top: auto;
-}
-
-.footer-text-links {
-  margin-bottom: 15px;
-}
-
-.footer-text-links a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.95rem;
-  margin: 0 8px;
-  transition: color 0.3s ease;
-}
-
-.footer-text-links a:hover {
-  color: #18702e;
-  /* highlight color */
-}
-
-.footer-links {
-  margin: 12px 0;
-}
-
-.footer-links a {
-  margin: 0 12px;
-  display: inline-flex;
+.footer-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.footer-links svg {
-  width: 26px;
-  height: 26px;
-  fill: #ffffff;
-  transition: fill 0.3s ease, transform 0.3s ease;
-}
-
-/* Hover effects */
-.footer-links a:hover svg {
-  fill: #15732f;
-  /* orange highlight */
-  transform: scale(1.2);
-  /* pop animation */
-}
-
-.footer-text p {
-  font-size: 0.85rem;
-  color: #ffffff;
-  margin-top: 12px;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.container {
-  flex-grow: 1;
-  /* content expands */
-}
-
-footer {
-  margin-top: 20px;
-  /* slight gap */
-}
-
-/* Remove blue tap highlight */
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-  /* For iOS/Android */
-  outline: none;
-  /* Removes blue focus outline */
-}
-
-button:focus,
-a:focus {
-  outline: none;
-  box-shadow: none;
-  /* Ensures no glow effect */
 }
 
 .app-footer {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  text-align: center;
+}
 
-  background-color: #001F3F;
-  /* Navy blue */
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 25px;
+  background: white;
+  color: #10b981;
+  font-weight: 600;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.map-container {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    width: 90%;
+    /* Slightly scale down map on mobile */
+  }
+}
+
+.footer-links-social {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links-social a {
   color: white;
-  padding: 40px 20px 10px;
-  margin-top: 70px;
-  position: relative;
-  /* prevents overlap with products */
-  clear: both;
+  transition: transform 0.3s ease;
+}
+
+.footer-links-social a:hover {
+  transform: scale(1.2);
+}
+
+.footer-links-social svg {
+  width: 30px;
+  height: 30px;
+}
+
+.footer-text p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* ---------- Navbar ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 98%;
+  max-width: 1200px;
+  padding: 30px 40px;
+  /* Increased height/size */
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.app-header:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+.back-btn {
+  position: absolute;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn svg {
+  width: 28px;
+  height: 28px;
+  stroke: #222;
+  transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+  transform: translateX(-3px);
 }
