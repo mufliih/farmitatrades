@@ -154,6 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
 const backBtn = document.querySelector('.back-btn');
 if (backBtn) {
   backBtn.addEventListener('click', () => {
-    window.history.back();
+    window.location.href = 'index.html';
   });
 }
