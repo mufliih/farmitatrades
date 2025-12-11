@@ -19,19 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateArrows() {
     if (isFooterVisible) {
-      nextBtn.classList.add('hidden');
-      prevBtn.classList.add('hidden'); // Hide both arrows when footer is visible
+      if (nextBtn) nextBtn.classList.add('hidden');
+      if (prevBtn) prevBtn.classList.add('hidden'); // Hide both arrows when footer is visible
     } else {
       // Prev Arrow
-      if (currentIndex <= 0) {
-        prevBtn.classList.add('hidden');
-      } else {
-        prevBtn.classList.remove('hidden');
+      if (prevBtn) {
+        if (currentIndex <= 0) {
+          prevBtn.classList.add('hidden');
+        } else {
+          prevBtn.classList.remove('hidden');
+        }
       }
 
       // Next Arrow
       // Always show next arrow until footer is fully visible
-      nextBtn.classList.remove('hidden');
+      if (nextBtn) nextBtn.classList.remove('hidden');
     }
   }
 
@@ -39,13 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach((section, index) => {
       if (index <= currentIndex) {
         // Visible sections (current and previous ones below it)
-        // Actually, for the overlap effect:
-        // Index 0 is bottom, Index 1 is above it, etc.
-        // If currentIndex is 2:
-        // 0: translateX(0)
-        // 1: translateX(0)
-        // 2: translateX(0) -> This is the top visible one
-        // 3: translateX(100%)
         section.style.transform = 'translateX(0)';
       } else {
         // Future sections
@@ -65,78 +60,92 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial state
   updateArrows();
 
+  // Navigation Logic
+  function goNext() {
+    if (isFooterVisible) return;
+
+    if (currentIndex < maxIndex) {
+      currentIndex++;
+      updateSlides();
+    } else {
+      // At last slide, show footer
+      isFooterVisible = true;
+      footer.classList.add('visible');
+      updateArrows();
+    }
+  }
+
+  function goPrev() {
+    if (isFooterVisible) {
+      // Hide footer
+      isFooterVisible = false;
+      footer.classList.remove('visible');
+      updateArrows();
+    } else {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlides();
+      }
+    }
+  }
+
   // Arrow Click Handlers
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      if (isFooterVisible) return;
-
-      if (currentIndex < maxIndex) {
-        // Go to next slide (slide it IN)
-        currentIndex++;
-        updateSlides();
-      } else {
-        // At last slide, show footer
-        isFooterVisible = true;
-        footer.classList.add('visible');
-        updateArrows();
-      }
-    });
+    nextBtn.addEventListener('click', goNext);
   }
 
   if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      if (isFooterVisible) {
-        // Hide footer
-        isFooterVisible = false;
-        footer.classList.remove('visible');
-        updateArrows();
-      } else {
-        if (currentIndex > 0) {
-          // Go to prev slide (slide current OUT)
-          currentIndex--;
-          updateSlides();
-        }
-      }
-    });
+    prevBtn.addEventListener('click', goPrev);
   }
 
+  // Wheel Event (Desktop)
   window.addEventListener('wheel', (e) => {
+    // Only prevent default if we are handling the scroll
+    // But since we are hijacking full page scroll, we should probably always prevent default
+    // unless we want to allow normal scrolling on some other elements?
+    // For this specific design, it seems to be a full-page takeover.
+    // However, if the user tries to scroll horizontally or something else, it might be annoying.
+    // Sticking to original behavior:
     e.preventDefault();
-    const delta = e.deltaY + e.deltaX;
 
-    if (Math.abs(delta) < 20) return; // Higher threshold for step-based scroll
+    const delta = e.deltaY; // Mostly care about vertical scroll
 
-    // Debounce or lock could be added here for smoother step-by-step
-    // For now, let's just trigger on threshold
+    if (Math.abs(delta) < 20) return; // Threshold
 
-    if (isFooterVisible) {
-      if (delta < -20) {
-        isFooterVisible = false;
-        footer.classList.remove('visible');
-        updateArrows();
-      }
+    if (delta > 0) {
+      goNext();
     } else {
-      if (delta > 0) {
-        // Next
-        if (currentIndex < maxIndex) {
-          currentIndex++;
-          updateSlides();
-          // Add a small timeout to prevent rapid firing?
-          // For simple implementation, relying on user control
-        } else {
-          isFooterVisible = true;
-          footer.classList.add('visible');
-          updateArrows();
-        }
-      } else {
-        // Prev
-        if (currentIndex > 0) {
-          currentIndex--;
-          updateSlides();
-        }
-      }
+      goPrev();
     }
   }, { passive: false });
+
+  // Touch Events (Mobile Swipe)
+  let touchStartY = 0;
+  let touchEndY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: false });
+
+  document.addEventListener('touchend', (e) => {
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+  }, { passive: false });
+
+  function handleSwipe() {
+    const swipeThreshold = 50; // Minimum distance for a swipe
+    const swipeDistance = touchStartY - touchEndY;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swiped UP (Finger moves up, content moves up -> Next Slide)
+        goNext();
+      } else {
+        // Swiped DOWN (Finger moves down, content moves down -> Prev Slide)
+        goPrev();
+      }
+    }
+  }
 
   // Resize handling not strictly needed for this logic as it's percentage based (translateX 100%)
 });
