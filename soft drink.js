@@ -12,6 +12,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // This is handled by CSS, but we can enforce it here if needed.
   // CSS: first-child translateX(0), others translateX(100%)
 
+  let autoSlideInterval;
+
+  function startAutoSlide() {
+    stopAutoSlide(); // Ensure we don't have multiple intervals
+    autoSlideInterval = setInterval(() => {
+      goNext();
+    }, 2000);
+  }
+
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+
+  function resetAutoSlide() {
+    stopAutoSlide();
+    if (!isFooterVisible) {
+      startAutoSlide();
+    }
+  }
+
   // Initial animation for first section text
   if (sections.length > 0) {
     sections[0].classList.add('in-view');
@@ -59,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial state
   updateArrows();
+  startAutoSlide(); // Start auto-slide on load
 
   // Navigation Logic
   function goNext() {
@@ -72,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
       isFooterVisible = true;
       footer.classList.add('visible');
       updateArrows();
+      stopAutoSlide(); // Stop auto-slide when footer is visible
+      toggleDots(false); // Hide dots
     }
   }
 
@@ -81,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
       isFooterVisible = false;
       footer.classList.remove('visible');
       updateArrows();
+      startAutoSlide(); // Resume auto-slide when leaving footer
+      toggleDots(true); // Show dots
     } else {
       if (currentIndex > 0) {
         currentIndex--;
@@ -89,13 +117,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ---------- Navigation Dots Logic ----------
+  const dotsContainer = document.querySelector('.dots-container');
+  let dots = [];
+
+  function createDots() {
+    if (!dotsContainer) return;
+
+    dotsContainer.innerHTML = '';
+
+    sections.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (index === currentIndex) dot.classList.add('active');
+
+      dot.addEventListener('click', () => {
+        if (isFooterVisible) return; // Prevent clicking dots when footer is active (optional)
+
+        currentIndex = index;
+        updateSlides();
+        resetAutoSlide();
+      });
+
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    });
+  }
+
+  function updateDots() {
+    dots.forEach((dot, index) => {
+      if (index === currentIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  function toggleDots(show) {
+    if (dotsContainer) {
+      if (show) {
+        dotsContainer.classList.remove('hidden');
+      } else {
+        dotsContainer.classList.add('hidden');
+      }
+    }
+  }
+
+  createDots(); // Initialize dots
+
+  // Modify updateSlides to include dots update
+  const originalUpdateSlides = updateSlides;
+  updateSlides = function () {
+    sections.forEach((section, index) => {
+      if (index <= currentIndex) {
+        section.style.transform = 'translateX(0)';
+      } else {
+        section.style.transform = 'translateX(100%)';
+      }
+
+      if (index === currentIndex) {
+        section.classList.add('in-view');
+      } else {
+        section.classList.remove('in-view');
+      }
+    });
+    updateArrows();
+    updateDots(); // Update dots state
+  };
+
   // Arrow Click Handlers
   if (nextBtn) {
-    nextBtn.addEventListener('click', goNext);
+    nextBtn.addEventListener('click', () => {
+      resetAutoSlide();
+      goNext();
+    });
   }
 
   if (prevBtn) {
-    prevBtn.addEventListener('click', goPrev);
+    prevBtn.addEventListener('click', () => {
+      resetAutoSlide();
+      goPrev();
+    });
   }
 
   // Wheel Event (Desktop)
@@ -107,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // However, if the user tries to scroll horizontally or something else, it might be annoying.
     // Sticking to original behavior:
     e.preventDefault();
+    resetAutoSlide(); // Reset timer on scroll interaction
 
     const delta = e.deltaY; // Mostly care about vertical scroll
 
@@ -125,11 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('touchstart', (e) => {
     touchStartY = e.changedTouches[0].screenY;
+    resetAutoSlide(); // Reset timer on touch start
   }, { passive: false });
 
   document.addEventListener('touchend', (e) => {
     touchEndY = e.changedTouches[0].screenY;
     handleSwipe();
+    resetAutoSlide(); // Reset timer on touch end
   }, { passive: false });
 
   function handleSwipe() {
