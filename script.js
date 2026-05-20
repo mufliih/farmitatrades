@@ -22,12 +22,38 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 });
-document.addEventListener("scroll", () => {
-  if (window.scrollY > 20) {
-    document.body.classList.add("scrolled");
-  } else {
-    document.body.classList.remove("scrolled");
+// Throttled scroll listener using passive events and requestAnimationFrame
+let lastKnownScrollPosition = 0;
+let ticking = false;
+let isScrolled = false;
+
+function updateScrollState() {
+  const scrolled = lastKnownScrollPosition > 20;
+  if (scrolled !== isScrolled) {
+    isScrolled = scrolled;
+    if (isScrolled) {
+      document.body.classList.add("scrolled");
+    } else {
+      document.body.classList.remove("scrolled");
+    }
   }
+}
+
+document.addEventListener("scroll", () => {
+  lastKnownScrollPosition = window.scrollY;
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      updateScrollState();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
+
+// Run once on load to initialize state
+document.addEventListener("DOMContentLoaded", () => {
+  lastKnownScrollPosition = window.scrollY;
+  updateScrollState();
 });
 
 
@@ -96,16 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-//scroll nav animation
-let lastScrollY = window.scrollY;
-const navbar = document.querySelector("nav");
-
-// remove shadow if at the very top
-if (window.scrollY === 0) {
-  navbar.classList.remove("scrolled");
-}
-
-lastScrollY = window.scrollY;
+// Nav scroll animation initialized on page load in DOMContentLoaded scroll handler
 
 // Smooth scroll for older browsers (optional)
 document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
